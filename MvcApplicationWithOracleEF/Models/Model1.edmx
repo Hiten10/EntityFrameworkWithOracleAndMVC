@@ -1,0 +1,618 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Model.Store" Alias="Self" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="11.2" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="COUNTRIES" EntityType="Model.Store.COUNTRIES" store:Type="Tables" Schema="HR" />
+          <EntitySet Name="DEPARTMENTS" EntityType="Model.Store.DEPARTMENTS" store:Type="Tables" Schema="HR" />
+          <EntitySet Name="EMPLOYEES" EntityType="Model.Store.EMPLOYEES" store:Type="Tables" Schema="HR" />
+          <EntitySet Name="JOB_HISTORY" EntityType="Model.Store.JOB_HISTORY" store:Type="Tables" Schema="HR" />
+          <EntitySet Name="JOBS" EntityType="Model.Store.JOBS" store:Type="Tables" Schema="HR" />
+          <EntitySet Name="LOCATIONS" EntityType="Model.Store.LOCATIONS" store:Type="Tables" Schema="HR" />
+          <EntitySet Name="REGIONS" EntityType="Model.Store.REGIONS" store:Type="Tables" Schema="HR" />
+          <AssociationSet Name="COUNTR_REG_FK" Association="Model.Store.COUNTR_REG_FK">
+            <End Role="REGIONS" EntitySet="REGIONS" />
+            <End Role="COUNTRIES" EntitySet="COUNTRIES" />
+          </AssociationSet>
+          <AssociationSet Name="DEPT_LOC_FK" Association="Model.Store.DEPT_LOC_FK">
+            <End Role="LOCATIONS" EntitySet="LOCATIONS" />
+            <End Role="DEPARTMENTS" EntitySet="DEPARTMENTS" />
+          </AssociationSet>
+          <AssociationSet Name="DEPT_MGR_FK" Association="Model.Store.DEPT_MGR_FK">
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+            <End Role="DEPARTMENTS" EntitySet="DEPARTMENTS" />
+          </AssociationSet>
+          <AssociationSet Name="EMP_DEPT_FK" Association="Model.Store.EMP_DEPT_FK">
+            <End Role="DEPARTMENTS" EntitySet="DEPARTMENTS" />
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+          </AssociationSet>
+          <AssociationSet Name="EMP_JOB_FK" Association="Model.Store.EMP_JOB_FK">
+            <End Role="JOBS" EntitySet="JOBS" />
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+          </AssociationSet>
+          <AssociationSet Name="EMP_MANAGER_FK" Association="Model.Store.EMP_MANAGER_FK">
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+            <End Role="EMPLOYEES1" EntitySet="EMPLOYEES" />
+          </AssociationSet>
+          <AssociationSet Name="JHIST_DEPT_FK" Association="Model.Store.JHIST_DEPT_FK">
+            <End Role="DEPARTMENTS" EntitySet="DEPARTMENTS" />
+            <End Role="JOB_HISTORY" EntitySet="JOB_HISTORY" />
+          </AssociationSet>
+          <AssociationSet Name="JHIST_EMP_FK" Association="Model.Store.JHIST_EMP_FK">
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+            <End Role="JOB_HISTORY" EntitySet="JOB_HISTORY" />
+          </AssociationSet>
+          <AssociationSet Name="JHIST_JOB_FK" Association="Model.Store.JHIST_JOB_FK">
+            <End Role="JOBS" EntitySet="JOBS" />
+            <End Role="JOB_HISTORY" EntitySet="JOB_HISTORY" />
+          </AssociationSet>
+          <AssociationSet Name="LOC_C_ID_FK" Association="Model.Store.LOC_C_ID_FK">
+            <End Role="COUNTRIES" EntitySet="COUNTRIES" />
+            <End Role="LOCATIONS" EntitySet="LOCATIONS" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="COUNTRIES">
+          <Key>
+            <PropertyRef Name="COUNTRY_ID" />
+          </Key>
+          <Property Name="COUNTRY_ID" Type="char" Nullable="false" MaxLength="2" />
+          <Property Name="COUNTRY_NAME" Type="varchar2" MaxLength="40" />
+          <Property Name="REGION_ID" Type="number" />
+        </EntityType>
+        <EntityType Name="DEPARTMENTS">
+          <Key>
+            <PropertyRef Name="DEPARTMENT_ID" />
+          </Key>
+          <Property Name="DEPARTMENT_ID" Type="number" Nullable="false" Precision="4" />
+          <Property Name="DEPARTMENT_NAME" Type="varchar2" Nullable="false" MaxLength="30" />
+          <Property Name="MANAGER_ID" Type="number" Precision="6" />
+          <Property Name="LOCATION_ID" Type="number" Precision="4" />
+        </EntityType>
+        <EntityType Name="EMPLOYEES">
+          <Key>
+            <PropertyRef Name="EMPLOYEE_ID" />
+          </Key>
+          <Property Name="EMPLOYEE_ID" Type="number" Nullable="false" Precision="6" />
+          <Property Name="FIRST_NAME" Type="varchar2" MaxLength="20" />
+          <Property Name="LAST_NAME" Type="varchar2" Nullable="false" MaxLength="25" />
+          <Property Name="EMAIL" Type="varchar2" Nullable="false" MaxLength="25" />
+          <Property Name="PHONE_NUMBER" Type="varchar2" MaxLength="20" />
+          <Property Name="HIRE_DATE" Type="date" Nullable="false" />
+          <Property Name="JOB_ID" Type="varchar2" Nullable="false" MaxLength="10" />
+          <Property Name="SALARY" Type="number" Precision="8" Scale="2" />
+          <Property Name="COMMISSION_PCT" Type="number" Precision="2" Scale="2" />
+          <Property Name="MANAGER_ID" Type="number" Precision="6" />
+          <Property Name="DEPARTMENT_ID" Type="number" Precision="4" />
+        </EntityType>
+        <EntityType Name="JOB_HISTORY">
+          <Key>
+            <PropertyRef Name="EMPLOYEE_ID" />
+            <PropertyRef Name="START_DATE" />
+          </Key>
+          <Property Name="EMPLOYEE_ID" Type="number" Nullable="false" Precision="6" />
+          <Property Name="START_DATE" Type="date" Nullable="false" />
+          <Property Name="END_DATE" Type="date" Nullable="false" />
+          <Property Name="JOB_ID" Type="varchar2" Nullable="false" MaxLength="10" />
+          <Property Name="DEPARTMENT_ID" Type="number" Precision="4" />
+        </EntityType>
+        <EntityType Name="JOBS">
+          <Key>
+            <PropertyRef Name="JOB_ID" />
+          </Key>
+          <Property Name="JOB_ID" Type="varchar2" Nullable="false" MaxLength="10" />
+          <Property Name="JOB_TITLE" Type="varchar2" Nullable="false" MaxLength="35" />
+          <Property Name="MIN_SALARY" Type="number" Precision="6" />
+          <Property Name="MAX_SALARY" Type="number" Precision="6" />
+        </EntityType>
+        <EntityType Name="LOCATIONS">
+          <Key>
+            <PropertyRef Name="LOCATION_ID" />
+          </Key>
+          <Property Name="LOCATION_ID" Type="number" Nullable="false" Precision="4" />
+          <Property Name="STREET_ADDRESS" Type="varchar2" MaxLength="40" />
+          <Property Name="POSTAL_CODE" Type="varchar2" MaxLength="12" />
+          <Property Name="CITY" Type="varchar2" Nullable="false" MaxLength="30" />
+          <Property Name="STATE_PROVINCE" Type="varchar2" MaxLength="25" />
+          <Property Name="COUNTRY_ID" Type="char" MaxLength="2" />
+        </EntityType>
+        <EntityType Name="REGIONS">
+          <Key>
+            <PropertyRef Name="REGION_ID" />
+          </Key>
+          <Property Name="REGION_ID" Type="number" Nullable="false" />
+          <Property Name="REGION_NAME" Type="varchar2" MaxLength="25" />
+        </EntityType>
+        <Association Name="COUNTR_REG_FK">
+          <End Role="REGIONS" Type="Model.Store.REGIONS" Multiplicity="0..1" />
+          <End Role="COUNTRIES" Type="Model.Store.COUNTRIES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REGIONS">
+              <PropertyRef Name="REGION_ID" />
+            </Principal>
+            <Dependent Role="COUNTRIES">
+              <PropertyRef Name="REGION_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DEPT_LOC_FK">
+          <End Role="LOCATIONS" Type="Model.Store.LOCATIONS" Multiplicity="0..1" />
+          <End Role="DEPARTMENTS" Type="Model.Store.DEPARTMENTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LOCATIONS">
+              <PropertyRef Name="LOCATION_ID" />
+            </Principal>
+            <Dependent Role="DEPARTMENTS">
+              <PropertyRef Name="LOCATION_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DEPT_MGR_FK">
+          <End Role="EMPLOYEES" Type="Model.Store.EMPLOYEES" Multiplicity="0..1" />
+          <End Role="DEPARTMENTS" Type="Model.Store.DEPARTMENTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLOYEES">
+              <PropertyRef Name="EMPLOYEE_ID" />
+            </Principal>
+            <Dependent Role="DEPARTMENTS">
+              <PropertyRef Name="MANAGER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EMP_DEPT_FK">
+          <End Role="DEPARTMENTS" Type="Model.Store.DEPARTMENTS" Multiplicity="0..1" />
+          <End Role="EMPLOYEES" Type="Model.Store.EMPLOYEES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DEPARTMENTS">
+              <PropertyRef Name="DEPARTMENT_ID" />
+            </Principal>
+            <Dependent Role="EMPLOYEES">
+              <PropertyRef Name="DEPARTMENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EMP_JOB_FK">
+          <End Role="JOBS" Type="Model.Store.JOBS" Multiplicity="1" />
+          <End Role="EMPLOYEES" Type="Model.Store.EMPLOYEES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JOBS">
+              <PropertyRef Name="JOB_ID" />
+            </Principal>
+            <Dependent Role="EMPLOYEES">
+              <PropertyRef Name="JOB_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EMP_MANAGER_FK">
+          <End Role="EMPLOYEES" Type="Model.Store.EMPLOYEES" Multiplicity="0..1" />
+          <End Role="EMPLOYEES1" Type="Model.Store.EMPLOYEES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLOYEES">
+              <PropertyRef Name="EMPLOYEE_ID" />
+            </Principal>
+            <Dependent Role="EMPLOYEES1">
+              <PropertyRef Name="MANAGER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="JHIST_DEPT_FK">
+          <End Role="DEPARTMENTS" Type="Model.Store.DEPARTMENTS" Multiplicity="0..1" />
+          <End Role="JOB_HISTORY" Type="Model.Store.JOB_HISTORY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DEPARTMENTS">
+              <PropertyRef Name="DEPARTMENT_ID" />
+            </Principal>
+            <Dependent Role="JOB_HISTORY">
+              <PropertyRef Name="DEPARTMENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="JHIST_EMP_FK">
+          <End Role="EMPLOYEES" Type="Model.Store.EMPLOYEES" Multiplicity="1" />
+          <End Role="JOB_HISTORY" Type="Model.Store.JOB_HISTORY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLOYEES">
+              <PropertyRef Name="EMPLOYEE_ID" />
+            </Principal>
+            <Dependent Role="JOB_HISTORY">
+              <PropertyRef Name="EMPLOYEE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="JHIST_JOB_FK">
+          <End Role="JOBS" Type="Model.Store.JOBS" Multiplicity="1" />
+          <End Role="JOB_HISTORY" Type="Model.Store.JOB_HISTORY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JOBS">
+              <PropertyRef Name="JOB_ID" />
+            </Principal>
+            <Dependent Role="JOB_HISTORY">
+              <PropertyRef Name="JOB_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="LOC_C_ID_FK">
+          <End Role="COUNTRIES" Type="Model.Store.COUNTRIES" Multiplicity="0..1" />
+          <End Role="LOCATIONS" Type="Model.Store.LOCATIONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COUNTRIES">
+              <PropertyRef Name="COUNTRY_ID" />
+            </Principal>
+            <Dependent Role="LOCATIONS">
+              <PropertyRef Name="COUNTRY_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="HREntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="COUNTRIES" EntityType="Model.COUNTRy" />
+          <EntitySet Name="DEPARTMENTS" EntityType="Model.DEPARTMENT" />
+          <EntitySet Name="EMPLOYEES" EntityType="Model.EMPLOYEE" />
+          <EntitySet Name="JOB_HISTORY" EntityType="Model.JOB_HISTORY" />
+          <EntitySet Name="JOBS" EntityType="Model.JOB" />
+          <EntitySet Name="LOCATIONS" EntityType="Model.LOCATION" />
+          <EntitySet Name="REGIONS" EntityType="Model.REGION" />
+          <AssociationSet Name="COUNTR_REG_FK" Association="Model.COUNTR_REG_FK">
+            <End Role="REGIONS" EntitySet="REGIONS" />
+            <End Role="COUNTRIES" EntitySet="COUNTRIES" />
+          </AssociationSet>
+          <AssociationSet Name="LOC_C_ID_FK" Association="Model.LOC_C_ID_FK">
+            <End Role="COUNTRIES" EntitySet="COUNTRIES" />
+            <End Role="LOCATIONS" EntitySet="LOCATIONS" />
+          </AssociationSet>
+          <AssociationSet Name="DEPT_LOC_FK" Association="Model.DEPT_LOC_FK">
+            <End Role="LOCATIONS" EntitySet="LOCATIONS" />
+            <End Role="DEPARTMENTS" EntitySet="DEPARTMENTS" />
+          </AssociationSet>
+          <AssociationSet Name="DEPT_MGR_FK" Association="Model.DEPT_MGR_FK">
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+            <End Role="DEPARTMENTS" EntitySet="DEPARTMENTS" />
+          </AssociationSet>
+          <AssociationSet Name="EMP_DEPT_FK" Association="Model.EMP_DEPT_FK">
+            <End Role="DEPARTMENTS" EntitySet="DEPARTMENTS" />
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+          </AssociationSet>
+          <AssociationSet Name="JHIST_DEPT_FK" Association="Model.JHIST_DEPT_FK">
+            <End Role="DEPARTMENTS" EntitySet="DEPARTMENTS" />
+            <End Role="JOB_HISTORY" EntitySet="JOB_HISTORY" />
+          </AssociationSet>
+          <AssociationSet Name="EMP_JOB_FK" Association="Model.EMP_JOB_FK">
+            <End Role="JOBS" EntitySet="JOBS" />
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+          </AssociationSet>
+          <AssociationSet Name="EMP_MANAGER_FK" Association="Model.EMP_MANAGER_FK">
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+            <End Role="EMPLOYEES1" EntitySet="EMPLOYEES" />
+          </AssociationSet>
+          <AssociationSet Name="JHIST_EMP_FK" Association="Model.JHIST_EMP_FK">
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+            <End Role="JOB_HISTORY" EntitySet="JOB_HISTORY" />
+          </AssociationSet>
+          <AssociationSet Name="JHIST_JOB_FK" Association="Model.JHIST_JOB_FK">
+            <End Role="JOBS" EntitySet="JOBS" />
+            <End Role="JOB_HISTORY" EntitySet="JOB_HISTORY" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="COUNTRy">
+          <Key>
+            <PropertyRef Name="COUNTRY_ID" />
+          </Key>
+          <Property Name="COUNTRY_ID" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="true" />
+          <Property Name="COUNTRY_NAME" Type="String" MaxLength="40" Unicode="false" FixedLength="false" />
+          <Property Name="REGION_ID" Type="Decimal" Precision="38" Scale="0" />
+          <NavigationProperty Name="REGION" Relationship="Model.COUNTR_REG_FK" FromRole="COUNTRIES" ToRole="REGIONS" />
+          <NavigationProperty Name="LOCATIONS" Relationship="Model.LOC_C_ID_FK" FromRole="COUNTRIES" ToRole="LOCATIONS" />
+        </EntityType>
+        <EntityType Name="DEPARTMENT">
+          <Key>
+            <PropertyRef Name="DEPARTMENT_ID" />
+          </Key>
+          <Property Name="DEPARTMENT_ID" Type="Int16" Nullable="false" />
+          <Property Name="DEPARTMENT_NAME" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="MANAGER_ID" Type="Int32" />
+          <Property Name="LOCATION_ID" Type="Int16" />
+          <NavigationProperty Name="LOCATION" Relationship="Model.DEPT_LOC_FK" FromRole="DEPARTMENTS" ToRole="LOCATIONS" />
+          <NavigationProperty Name="EMPLOYEE" Relationship="Model.DEPT_MGR_FK" FromRole="DEPARTMENTS" ToRole="EMPLOYEES" />
+          <NavigationProperty Name="EMPLOYEES" Relationship="Model.EMP_DEPT_FK" FromRole="DEPARTMENTS" ToRole="EMPLOYEES" />
+          <NavigationProperty Name="JOB_HISTORY" Relationship="Model.JHIST_DEPT_FK" FromRole="DEPARTMENTS" ToRole="JOB_HISTORY" />
+        </EntityType>
+        <EntityType Name="EMPLOYEE">
+          <Key>
+            <PropertyRef Name="EMPLOYEE_ID" />
+          </Key>
+          <Property Name="EMPLOYEE_ID" Type="Int32" Nullable="false" />
+          <Property Name="FIRST_NAME" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="LAST_NAME" Type="String" Nullable="false" MaxLength="25" Unicode="false" FixedLength="false" />
+          <Property Name="EMAIL" Type="String" Nullable="false" MaxLength="25" Unicode="false" FixedLength="false" />
+          <Property Name="PHONE_NUMBER" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="HIRE_DATE" Type="DateTime" Nullable="false" />
+          <Property Name="JOB_ID" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="SALARY" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="COMMISSION_PCT" Type="Decimal" Precision="2" Scale="2" />
+          <Property Name="MANAGER_ID" Type="Int32" />
+          <Property Name="DEPARTMENT_ID" Type="Int16" />
+          <NavigationProperty Name="DEPARTMENTS" Relationship="Model.DEPT_MGR_FK" FromRole="EMPLOYEES" ToRole="DEPARTMENTS" />
+          <NavigationProperty Name="DEPARTMENT" Relationship="Model.EMP_DEPT_FK" FromRole="EMPLOYEES" ToRole="DEPARTMENTS" />
+          <NavigationProperty Name="JOB" Relationship="Model.EMP_JOB_FK" FromRole="EMPLOYEES" ToRole="JOBS" />
+          <NavigationProperty Name="EMPLOYEES1" Relationship="Model.EMP_MANAGER_FK" FromRole="EMPLOYEES" ToRole="EMPLOYEES1" />
+          <NavigationProperty Name="EMPLOYEE1" Relationship="Model.EMP_MANAGER_FK" FromRole="EMPLOYEES1" ToRole="EMPLOYEES" />
+          <NavigationProperty Name="JOB_HISTORY" Relationship="Model.JHIST_EMP_FK" FromRole="EMPLOYEES" ToRole="JOB_HISTORY" />
+        </EntityType>
+        <EntityType Name="JOB_HISTORY">
+          <Key>
+            <PropertyRef Name="EMPLOYEE_ID" />
+            <PropertyRef Name="START_DATE" />
+          </Key>
+          <Property Name="EMPLOYEE_ID" Type="Int32" Nullable="false" />
+          <Property Name="START_DATE" Type="DateTime" Nullable="false" />
+          <Property Name="END_DATE" Type="DateTime" Nullable="false" />
+          <Property Name="JOB_ID" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="DEPARTMENT_ID" Type="Int16" />
+          <NavigationProperty Name="DEPARTMENT" Relationship="Model.JHIST_DEPT_FK" FromRole="JOB_HISTORY" ToRole="DEPARTMENTS" />
+          <NavigationProperty Name="EMPLOYEE" Relationship="Model.JHIST_EMP_FK" FromRole="JOB_HISTORY" ToRole="EMPLOYEES" />
+          <NavigationProperty Name="JOB" Relationship="Model.JHIST_JOB_FK" FromRole="JOB_HISTORY" ToRole="JOBS" />
+        </EntityType>
+        <EntityType Name="JOB">
+          <Key>
+            <PropertyRef Name="JOB_ID" />
+          </Key>
+          <Property Name="JOB_ID" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="JOB_TITLE" Type="String" Nullable="false" MaxLength="35" Unicode="false" FixedLength="false" />
+          <Property Name="MIN_SALARY" Type="Int32" />
+          <Property Name="MAX_SALARY" Type="Int32" />
+          <NavigationProperty Name="EMPLOYEES" Relationship="Model.EMP_JOB_FK" FromRole="JOBS" ToRole="EMPLOYEES" />
+          <NavigationProperty Name="JOB_HISTORY" Relationship="Model.JHIST_JOB_FK" FromRole="JOBS" ToRole="JOB_HISTORY" />
+        </EntityType>
+        <EntityType Name="LOCATION">
+          <Key>
+            <PropertyRef Name="LOCATION_ID" />
+          </Key>
+          <Property Name="LOCATION_ID" Type="Int16" Nullable="false" />
+          <Property Name="STREET_ADDRESS" Type="String" MaxLength="40" Unicode="false" FixedLength="false" />
+          <Property Name="POSTAL_CODE" Type="String" MaxLength="12" Unicode="false" FixedLength="false" />
+          <Property Name="CITY" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="STATE_PROVINCE" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
+          <Property Name="COUNTRY_ID" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
+          <NavigationProperty Name="COUNTRy" Relationship="Model.LOC_C_ID_FK" FromRole="LOCATIONS" ToRole="COUNTRIES" />
+          <NavigationProperty Name="DEPARTMENTS" Relationship="Model.DEPT_LOC_FK" FromRole="LOCATIONS" ToRole="DEPARTMENTS" />
+        </EntityType>
+        <EntityType Name="REGION">
+          <Key>
+            <PropertyRef Name="REGION_ID" />
+          </Key>
+          <Property Name="REGION_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="REGION_NAME" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="COUNTRIES" Relationship="Model.COUNTR_REG_FK" FromRole="REGIONS" ToRole="COUNTRIES" />
+        </EntityType>
+        <Association Name="COUNTR_REG_FK">
+          <End Role="REGIONS" Type="Model.REGION" Multiplicity="0..1" />
+          <End Role="COUNTRIES" Type="Model.COUNTRy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REGIONS">
+              <PropertyRef Name="REGION_ID" />
+            </Principal>
+            <Dependent Role="COUNTRIES">
+              <PropertyRef Name="REGION_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="LOC_C_ID_FK">
+          <End Role="COUNTRIES" Type="Model.COUNTRy" Multiplicity="0..1" />
+          <End Role="LOCATIONS" Type="Model.LOCATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COUNTRIES">
+              <PropertyRef Name="COUNTRY_ID" />
+            </Principal>
+            <Dependent Role="LOCATIONS">
+              <PropertyRef Name="COUNTRY_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DEPT_LOC_FK">
+          <End Role="LOCATIONS" Type="Model.LOCATION" Multiplicity="0..1" />
+          <End Role="DEPARTMENTS" Type="Model.DEPARTMENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LOCATIONS">
+              <PropertyRef Name="LOCATION_ID" />
+            </Principal>
+            <Dependent Role="DEPARTMENTS">
+              <PropertyRef Name="LOCATION_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DEPT_MGR_FK">
+          <End Role="EMPLOYEES" Type="Model.EMPLOYEE" Multiplicity="0..1" />
+          <End Role="DEPARTMENTS" Type="Model.DEPARTMENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLOYEES">
+              <PropertyRef Name="EMPLOYEE_ID" />
+            </Principal>
+            <Dependent Role="DEPARTMENTS">
+              <PropertyRef Name="MANAGER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EMP_DEPT_FK">
+          <End Role="DEPARTMENTS" Type="Model.DEPARTMENT" Multiplicity="0..1" />
+          <End Role="EMPLOYEES" Type="Model.EMPLOYEE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DEPARTMENTS">
+              <PropertyRef Name="DEPARTMENT_ID" />
+            </Principal>
+            <Dependent Role="EMPLOYEES">
+              <PropertyRef Name="DEPARTMENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="JHIST_DEPT_FK">
+          <End Role="DEPARTMENTS" Type="Model.DEPARTMENT" Multiplicity="0..1" />
+          <End Role="JOB_HISTORY" Type="Model.JOB_HISTORY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DEPARTMENTS">
+              <PropertyRef Name="DEPARTMENT_ID" />
+            </Principal>
+            <Dependent Role="JOB_HISTORY">
+              <PropertyRef Name="DEPARTMENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EMP_JOB_FK">
+          <End Role="JOBS" Type="Model.JOB" Multiplicity="1" />
+          <End Role="EMPLOYEES" Type="Model.EMPLOYEE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JOBS">
+              <PropertyRef Name="JOB_ID" />
+            </Principal>
+            <Dependent Role="EMPLOYEES">
+              <PropertyRef Name="JOB_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EMP_MANAGER_FK">
+          <End Role="EMPLOYEES" Type="Model.EMPLOYEE" Multiplicity="0..1" />
+          <End Role="EMPLOYEES1" Type="Model.EMPLOYEE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLOYEES">
+              <PropertyRef Name="EMPLOYEE_ID" />
+            </Principal>
+            <Dependent Role="EMPLOYEES1">
+              <PropertyRef Name="MANAGER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="JHIST_EMP_FK">
+          <End Role="EMPLOYEES" Type="Model.EMPLOYEE" Multiplicity="1" />
+          <End Role="JOB_HISTORY" Type="Model.JOB_HISTORY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLOYEES">
+              <PropertyRef Name="EMPLOYEE_ID" />
+            </Principal>
+            <Dependent Role="JOB_HISTORY">
+              <PropertyRef Name="EMPLOYEE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="JHIST_JOB_FK">
+          <End Role="JOBS" Type="Model.JOB" Multiplicity="1" />
+          <End Role="JOB_HISTORY" Type="Model.JOB_HISTORY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JOBS">
+              <PropertyRef Name="JOB_ID" />
+            </Principal>
+            <Dependent Role="JOB_HISTORY">
+              <PropertyRef Name="JOB_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="HREntities">
+          <EntitySetMapping Name="COUNTRIES">
+            <EntityTypeMapping TypeName="Model.COUNTRy">
+              <MappingFragment StoreEntitySet="COUNTRIES">
+                <ScalarProperty Name="COUNTRY_ID" ColumnName="COUNTRY_ID" />
+                <ScalarProperty Name="COUNTRY_NAME" ColumnName="COUNTRY_NAME" />
+                <ScalarProperty Name="REGION_ID" ColumnName="REGION_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DEPARTMENTS">
+            <EntityTypeMapping TypeName="Model.DEPARTMENT">
+              <MappingFragment StoreEntitySet="DEPARTMENTS">
+                <ScalarProperty Name="DEPARTMENT_ID" ColumnName="DEPARTMENT_ID" />
+                <ScalarProperty Name="DEPARTMENT_NAME" ColumnName="DEPARTMENT_NAME" />
+                <ScalarProperty Name="MANAGER_ID" ColumnName="MANAGER_ID" />
+                <ScalarProperty Name="LOCATION_ID" ColumnName="LOCATION_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EMPLOYEES">
+            <EntityTypeMapping TypeName="Model.EMPLOYEE">
+              <MappingFragment StoreEntitySet="EMPLOYEES">
+                <ScalarProperty Name="EMPLOYEE_ID" ColumnName="EMPLOYEE_ID" />
+                <ScalarProperty Name="FIRST_NAME" ColumnName="FIRST_NAME" />
+                <ScalarProperty Name="LAST_NAME" ColumnName="LAST_NAME" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="PHONE_NUMBER" ColumnName="PHONE_NUMBER" />
+                <ScalarProperty Name="HIRE_DATE" ColumnName="HIRE_DATE" />
+                <ScalarProperty Name="JOB_ID" ColumnName="JOB_ID" />
+                <ScalarProperty Name="SALARY" ColumnName="SALARY" />
+                <ScalarProperty Name="COMMISSION_PCT" ColumnName="COMMISSION_PCT" />
+                <ScalarProperty Name="MANAGER_ID" ColumnName="MANAGER_ID" />
+                <ScalarProperty Name="DEPARTMENT_ID" ColumnName="DEPARTMENT_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JOB_HISTORY">
+            <EntityTypeMapping TypeName="Model.JOB_HISTORY">
+              <MappingFragment StoreEntitySet="JOB_HISTORY">
+                <ScalarProperty Name="EMPLOYEE_ID" ColumnName="EMPLOYEE_ID" />
+                <ScalarProperty Name="START_DATE" ColumnName="START_DATE" />
+                <ScalarProperty Name="END_DATE" ColumnName="END_DATE" />
+                <ScalarProperty Name="JOB_ID" ColumnName="JOB_ID" />
+                <ScalarProperty Name="DEPARTMENT_ID" ColumnName="DEPARTMENT_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JOBS">
+            <EntityTypeMapping TypeName="Model.JOB">
+              <MappingFragment StoreEntitySet="JOBS">
+                <ScalarProperty Name="JOB_ID" ColumnName="JOB_ID" />
+                <ScalarProperty Name="JOB_TITLE" ColumnName="JOB_TITLE" />
+                <ScalarProperty Name="MIN_SALARY" ColumnName="MIN_SALARY" />
+                <ScalarProperty Name="MAX_SALARY" ColumnName="MAX_SALARY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LOCATIONS">
+            <EntityTypeMapping TypeName="Model.LOCATION">
+              <MappingFragment StoreEntitySet="LOCATIONS">
+                <ScalarProperty Name="LOCATION_ID" ColumnName="LOCATION_ID" />
+                <ScalarProperty Name="STREET_ADDRESS" ColumnName="STREET_ADDRESS" />
+                <ScalarProperty Name="POSTAL_CODE" ColumnName="POSTAL_CODE" />
+                <ScalarProperty Name="CITY" ColumnName="CITY" />
+                <ScalarProperty Name="STATE_PROVINCE" ColumnName="STATE_PROVINCE" />
+                <ScalarProperty Name="COUNTRY_ID" ColumnName="COUNTRY_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="REGIONS">
+            <EntityTypeMapping TypeName="Model.REGION">
+              <MappingFragment StoreEntitySet="REGIONS">
+                <ScalarProperty Name="REGION_ID" ColumnName="REGION_ID" />
+                <ScalarProperty Name="REGION_NAME" ColumnName="REGION_NAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
